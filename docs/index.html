@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#13213a">
+<title>CodeRing, LLC — Software Engineering for the Federal Government</title>
+<meta name="description" content="CodeRing, LLC is a service-disabled veteran-owned small business specializing in secure, agile software development for the federal government.">
+<link rel="icon" type="image/png" href="assets/cr-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #13213a;
+    --navy-2: #1c2d4b;
+    --navy-line: rgba(255,255,255,.1);
+    --paper: #f6f4ef;
+    --white: #ffffff;
+    --ink: #1a1f2b;
+    --muted: #5d6472;
+    --line: #dcd8ce;
+    --lime: #c2e35f;
+    --accent: #2f4a7a;
+    --side: 288px;
+    --gutter: clamp(20px, 5vw, 72px);
+    --serif: "Source Serif 4", Georgia, serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.015em; line-height: 1.12; margin: 0; }
+
+  /* Sidebar */
+  .side {
+    position: fixed; inset: 0 auto 0 0; width: var(--side); z-index: 40;
+    background: var(--navy); color: #dfe4ee; display: flex; flex-direction: column;
+    padding: 40px 32px 32px;
+  }
+  .side .brand { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; text-decoration: none; }
+  .side .brand img { width: 96px; height: 96px; }
+  .side .brand small { font: 500 11px "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: #8e9ab2; }
+  .side nav { margin-top: 48px; display: flex; flex-direction: column; }
+  .side nav a {
+    position: relative; text-decoration: none; padding: 11px 0 11px 20px; font-size: 15px; color: #a9b3c7;
+    border-left: 1px solid var(--navy-line); transition: color .2s;
+  }
+  .side nav a::before { content: ""; position: absolute; left: -1px; top: 0; bottom: 0; width: 2px; background: var(--lime); transform: scaleY(0); transition: transform .25s; }
+  .side nav a:hover { color: #fff; }
+  .side nav a.active { color: #fff; }
+  .side nav a.active::before { transform: scaleY(1); }
+  .side .side-foot { margin-top: auto; font-size: 14px; color: #8e9ab2; }
+  .side .side-foot a { color: #dfe4ee; text-decoration: none; }
+  .side .side-foot a:hover { color: var(--lime); }
+  .side .pdf {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 24px;
+    padding: 14px 16px; border: 1px solid var(--navy-line); border-radius: 6px; text-decoration: none;
+    font-size: 14px; font-weight: 500; color: #fff; background: var(--navy-2); transition: border-color .2s;
+  }
+  .side .pdf:hover { border-color: var(--lime); }
+  .side .pdf svg { width: 18px; height: 18px; color: var(--lime); flex: none; }
+  .topbar { display: none; }
+
+  main { margin-left: var(--side); }
+  .inner { max-width: 1120px; padding: 0 var(--gutter); }
+  section { scroll-margin-top: 24px; }
+
+  /* Hero */
+  .hero { padding: clamp(72px, 12vh, 140px) 0 clamp(64px, 9vh, 104px); border-bottom: 1px solid var(--line); background: var(--white); }
+  .overline { display: flex; align-items: center; gap: 14px; font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .overline::after { content: ""; flex: 0 0 48px; height: 1px; background: currentColor; opacity: .5; }
+  .hero h1 { font-size: clamp(40px, 5.4vw, 70px); margin: 28px 0 28px; max-width: 19ch; text-wrap: balance; }
+  .hero h1 em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .hero p { font-size: clamp(18px, 1.5vw, 20px); color: var(--muted); max-width: 36em; margin: 0 0 40px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 4px; font: 500 15px "IBM Plex Sans", sans-serif; text-decoration: none; transition: background .15s, color .15s, border-color .15s; }
+  .btn.solid { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
+  .btn.solid:hover { background: var(--accent); border-color: var(--accent); }
+  .btn.line { border: 1px solid var(--line); color: var(--ink); background: var(--white); }
+  .btn.line:hover { border-color: var(--navy); }
+  .btn svg { width: 16px; height: 16px; }
+
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(56px, 8vh, 88px); border-top: 1px solid var(--line); }
+  .fact { padding: 22px 20px 0 0; }
+  .fact + .fact { padding-left: 20px; border-left: 1px solid var(--line); }
+  .fact b { display: block; font: 600 28px/1.1 var(--serif); color: var(--navy); }
+  .fact span { font-size: 14px; color: var(--muted); }
+
+  /* Generic sections */
+  .section { padding: clamp(72px, 10vw, 120px) 0; border-bottom: 1px solid var(--line); }
+  .section h2 { font-size: clamp(32px, 3.8vw, 46px); margin: 18px 0 0; max-width: 24ch; text-wrap: balance; }
+  .section .lead { color: var(--muted); max-width: 40em; margin: 20px 0 0; }
+  .section-body { margin-top: clamp(40px, 5vw, 56px); }
+
+  .overview-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .overview-grid p { margin: 0 0 18px; }
+  blockquote {
+    margin: 0; padding: 28px 28px 28px 32px; background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--navy);
+    font: 500 21px/1.5 var(--serif); color: var(--navy);
+  }
+  blockquote cite { display: block; margin-top: 14px; font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-style: normal; }
+
+  .svc { display: grid; grid-template-columns: 80px 1fr 1.3fr; gap: 24px; padding: 32px 0; border-top: 1px solid var(--line); align-items: start; }
+  .svc:last-child { border-bottom: 1px solid var(--line); }
+  .svc .no { font: 500 italic 34px/1 var(--serif); color: var(--accent); opacity: .7; }
+  .svc h3 { font-size: 25px; }
+  .svc p { margin: 0; color: var(--muted); }
+
+  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); }
+  .cap-grid h3 { font: 600 13px "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+  .checks { list-style: none; margin: 0; padding: 0; background: var(--white); border: 1px solid var(--line); border-radius: 6px; }
+  .checks li { display: flex; gap: 14px; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--line); font-weight: 500; }
+  .checks li:last-child { border-bottom: 0; }
+  .checks svg { width: 18px; height: 18px; flex: none; color: var(--navy); }
+  .diff-list { list-style: none; margin: 0; padding: 0; counter-reset: d; }
+  .diff-list li { counter-increment: d; position: relative; padding: 0 0 22px 44px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .diff-list li:last-child { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+  .diff-list li::before { content: counter(d, decimal-leading-zero); position: absolute; left: 0; top: 2px; font: 500 13px "IBM Plex Mono", monospace; color: var(--accent); }
+  .diff-list strong { display: block; font-weight: 600; }
+  .diff-list span { color: var(--muted); font-size: 16px; }
+
+  table.pp { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); }
+  table.pp th { text-align: left; font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 16px 24px; border-bottom: 1px solid var(--line); background: #faf9f6; }
+  table.pp td { padding: 22px 24px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  table.pp tr:last-child td { border-bottom: 0; }
+  table.pp td.agency { font: 600 20px/1.3 var(--serif); }
+  table.pp td.period { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+  .tag { display: inline-block; font: 500 12px "IBM Plex Sans", sans-serif; padding: 3px 10px; border-radius: 999px; background: #e8edf6; color: var(--accent); }
+  .tag.done { background: #efede7; color: var(--muted); }
+
+  /* Contact */
+  .contact { background: var(--navy); color: #dfe4ee; padding: clamp(72px, 10vw, 120px) 0; border: 0; }
+  .contact .overline { color: var(--lime); }
+  .contact h2 { color: #fff; }
+  .contact .lead { color: #a9b3c7; }
+  .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--navy-line); border: 1px solid var(--navy-line); margin-top: 48px; }
+  .contact-grid > div { background: var(--navy); padding: 28px; }
+  .contact-grid dt { font: 500 11px "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: #8e9ab2; margin-bottom: 10px; }
+  .contact-grid dd { margin: 0; color: #fff; }
+  .contact-grid a { color: var(--lime); text-decoration: none; }
+  .contact-grid a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .contact .actions { margin-top: 40px; }
+  .contact .btn.solid { background: var(--lime); border-color: var(--lime); color: var(--navy); }
+  .contact .btn.solid:hover { background: #d4ef84; }
+  .contact .btn.line { background: transparent; color: #fff; border-color: rgba(255,255,255,.25); }
+  .contact .btn.line:hover { border-color: #fff; }
+  footer { padding: 28px 0; font-size: 14px; color: var(--muted); }
+  footer .inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 1100px) {
+    .facts { grid-template-columns: repeat(2, 1fr); }
+    .fact:nth-child(3) { padding-left: 0; border-left: 0; }
+    .fact:nth-child(n+3) { margin-top: 22px; border-top: 1px solid var(--line); }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    .side { display: none; }
+    main { margin-left: 0; }
+    .topbar {
+      display: flex; position: sticky; top: 0; z-index: 50; height: 64px; align-items: center; justify-content: space-between;
+      padding: 0 20px; background: var(--navy); color: #fff;
+    }
+    .topbar .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 18px var(--serif); }
+    .topbar .brand img { width: 36px; height: 36px; }
+    .topbar button { background: none; border: 0; color: #fff; padding: 8px; margin-right: -8px; cursor: pointer; }
+    .topbar button svg { width: 24px; height: 24px; display: block; }
+    .drawer { display: none; position: sticky; top: 64px; z-index: 49; background: var(--navy); padding: 4px 20px 20px; border-top: 1px solid var(--navy-line); }
+    .drawer.open { display: block; }
+    .drawer a { display: block; padding: 13px 0; color: #dfe4ee; text-decoration: none; border-bottom: 1px solid var(--navy-line); }
+    .drawer a.pdf-m { color: var(--lime); border-bottom: 0; padding-bottom: 0; }
+    section { scroll-margin-top: 64px; }
+    .overview-grid, .cap-grid { grid-template-columns: 1fr; }
+    .svc { grid-template-columns: 48px 1fr; gap: 8px 16px; }
+    .svc p { grid-column: 2; }
+    .svc .no { font-size: 26px; }
+  }
+  @media (min-width: 901px) { .drawer { display: none !important; } }
+  @media (max-width: 600px) {
+    .facts { grid-template-columns: 1fr 1fr; }
+    .fact b { font-size: 22px; }
+    table.pp thead { display: none; }
+    table.pp, table.pp tbody, table.pp tr, table.pp td { display: block; width: 100%; }
+    table.pp tr { padding: 18px 20px; border-bottom: 1px solid var(--line); }
+    table.pp tr:last-child { border-bottom: 0; }
+    table.pp td { padding: 0; border: 0; }
+    table.pp td.agency { font-size: 19px; margin-bottom: 6px; }
+    table.pp td.period { display: inline-block; width: auto; margin-right: 10px; font-size: 15px; }
+    table.pp td.status { display: inline-block; width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <a href="#top" class="brand" aria-label="CodeRing home">
+    <img src="assets/logo.png" alt="CodeRing logo">
+    <small>CodeRing, LLC · SDVOSB</small>
+  </a>
+  <nav aria-label="Sections">
+    <a href="#top" class="active">Home</a>
+    <a href="#overview">Overview</a>
+    <a href="#services">Services</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#performance">Past Performance</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="side-foot">
+    <a class="pdf" href="assets/CodeRing_Capability_Statement.pdf" target="_blank" rel="noopener">
+      Capability Statement
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+    </a>
+    <a href="mailto:contact@code-ring.com">contact@code-ring.com</a><br>
+    Jacksonville, Florida
+  </div>
+</aside>
+
+<header class="topbar">
+  <a href="#top" class="brand"><img src="assets/logo.png" alt="">CodeRing</a>
+  <button aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+</header>
+<nav class="drawer" id="drawer" aria-label="Sections">
+  <a href="#overview">Overview</a>
+  <a href="#services">Services</a>
+  <a href="#capabilities">Capabilities</a>
+  <a href="#performance">Past Performance</a>
+  <a href="#contact">Contact</a>
+  <a class="pdf-m" href="assets/CodeRing_Capability_Statement.pdf" target="_blank" rel="noopener">Download Capability Statement ↓</a>
+</nav>
+
+<main>
+  <section class="hero" id="top">
+    <div class="inner">
+      <div class="overline">Service-Disabled Veteran-Owned Small Business</div>
+      <h1>Dependable software engineering for the <em>federal government.</em></h1>
+      <p>CodeRing specializes in agile software development, automated testing, and modernization for federal agencies. Our code is deployed in production at the highest levels of government.</p>
+      <div class="actions">
+        <a class="btn solid" href="#contact">Contact us</a>
+        <a class="btn line" href="assets/CodeRing_Capability_Statement.pdf" target="_blank" rel="noopener">View Capability Statement
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>Since 2007</b><span>Delivering for federal clients</span></div>
+        <div class="fact"><b>SDVOSB</b><span>SBA-certified service-disabled veteran-owned</span></div>
+        <div class="fact"><b>ATO</b><span>Achieved for multiple applications</span></div>
+        <div class="fact"><b>Cleared</b><span>Professionals ready on day one</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="overview">
+    <div class="inner">
+      <div class="overline reveal">Corporate Overview</div>
+      <h2 class="reveal">A small business with a proven record across government.</h2>
+      <div class="section-body overview-grid">
+        <div class="reveal">
+          <p>CodeRing, LLC is a service-disabled veteran-owned small business specializing in agile software development for the federal government.</p>
+          <p>We have led agile transformations and implemented continuous integration at a variety of prestigious federal clients — with proven performance across the Military, Executive Branch, Law Enforcement, Health, and Intelligence Community.</p>
+        </div>
+        <blockquote class="reveal">
+          Our code is deployed in production at the highest levels of government.
+          <cite>CodeRing, LLC</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="inner">
+      <div class="overline reveal">Services</div>
+      <h2 class="reveal">Let us put our experience to work for you.</h2>
+      <div class="section-body">
+        <div class="svc reveal">
+          <span class="no">i.</span>
+          <h3>Enterprise Applications</h3>
+          <p>Over a decade of experience designing and developing custom web applications to tackle a variety of enterprise challenges, built around your organization's needs.</p>
+        </div>
+        <div class="svc reveal">
+          <span class="no">ii.</span>
+          <h3>Agile Transformation</h3>
+          <p>Struggling to complete a project, or seeing deployed software go under-utilized? We bring agile leadership to your shop and shorten the time from idea to delivery.</p>
+        </div>
+        <div class="svc reveal">
+          <span class="no">iii.</span>
+          <h3>IT Consulting</h3>
+          <p>We assess your organization and recommend a path to modernize your line-of-business software suite, and specialize in standing up and training teams on automated testing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="capabilities">
+    <div class="inner">
+      <div class="overline reveal">Capabilities</div>
+      <h2 class="reveal">Core competencies and key differentiators.</h2>
+      <div class="section-body cap-grid">
+        <div class="reveal">
+          <h3>Core Competencies</h3>
+          <ul class="checks">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Software Development</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Automated Testing</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Agile Transformation</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Process Improvement</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Business Process Analysis</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Business Process Automation</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Project Management</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h3>Key Differentiators</h3>
+          <ol class="diff-list">
+            <li><strong>Security-minded engineering</strong><span>We have successfully achieved Authority to Operate (ATO) for multiple web-based applications.</span></li>
+            <li><strong>Vulnerability remediation</strong><span>Automated scanning tools and manual processes to identify, prioritize, and remediate vulnerabilities in new and legacy code.</span></li>
+            <li><strong>Certified technical experts</strong><span>Microsoft Certified: Azure Developer Associate, Certified ScrumMaster, Microsoft MCTS, Certified Ethical Hacker, CompTIA, and more.</span></li>
+            <li><strong>DoD 8570 &amp; 8140 workforce qualified</strong><span>Our staff met DoD 8570.01-M certification requirements and are aligned with its successor, DoD Manual 8140.03, which qualifies personnel by DoD Cyber Workforce Framework (DCWF) work role through certification, training, education, and experience. Cleared professionals ready to contribute on day one.</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="performance">
+    <div class="inner">
+      <div class="overline reveal">Past Performance</div>
+      <h2 class="reveal">Selected federal engagements.</h2>
+      <div class="section-body reveal">
+        <table class="pp">
+          <thead><tr><th>Agency</th><th>Period</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="agency">Executive Branch Military Office</td><td class="period">2009 – 2016, 2020 – Present</td><td class="status"><span class="tag">Ongoing</span></td></tr>
+            <tr><td class="agency">National Institutes of Health</td><td class="period">2015 – 2025</td><td class="status"><span class="tag done">Completed</span></td></tr>
+            <tr><td class="agency">U.S. Army</td><td class="period">2017 – 2021</td><td class="status"><span class="tag done">Completed</span></td></tr>
+            <tr><td class="agency">Law Enforcement Component of DHS</td><td class="period">2016 – 2017</td><td class="status"><span class="tag done">Completed</span></td></tr>
+            <tr><td class="agency">U.S. Air Force</td><td class="period">2007 – 2009</td><td class="status"><span class="tag done">Completed</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="inner">
+      <div class="overline reveal">Contact</div>
+      <h2 class="reveal">Get in touch.</h2>
+      <p class="lead reveal">For teaming inquiries, contracting opportunities, or to request more information, reach out directly.</p>
+      <dl class="contact-grid reveal">
+        <div><dt>Email</dt><dd><a href="mailto:contact@code-ring.com">contact@code-ring.com</a></dd></div>
+        <div><dt>Address</dt><dd>4446-1A Hendricks Ave<br>Jacksonville, FL 32207</dd></div>
+        <div><dt>NAICS Codes</dt><dd>541511 · 541512 · 541519</dd></div>
+        <div><dt>UEI · CAGE Code</dt><dd>L3LLUEHKRXU6 · 9BDG2</dd></div>
+      </dl>
+      <div class="actions reveal">
+        <a class="btn solid" href="mailto:contact@code-ring.com">Send an email</a>
+        <a class="btn line" href="assets/CodeRing_Capability_Statement.pdf" target="_blank" rel="noopener">Download Capability Statement</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="inner">
+      <span>© <span class="year">2026</span> CodeRing, LLC. All rights reserved.</span>
+      <span>Service-Disabled Veteran-Owned Small Business</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const btn = document.querySelector('.topbar button'), drawer = document.getElementById('drawer');
+  btn.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open'); btn.setAttribute('aria-expanded', open);
+  });
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    drawer.classList.remove('open'); btn.setAttribute('aria-expanded', false);
+  }));
+
+  // Scrollspy for the sidebar
+  const links = [...document.querySelectorAll('.side nav a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = () => {
+    const y = window.scrollY + window.innerHeight * 0.35;
+    let idx = 0;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= y) idx = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) idx = sections.length - 1;
+    links.forEach((a, i) => a.classList.toggle('active', i === idx));
+  };
+  spy(); window.addEventListener('scroll', spy, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+  document.querySelector('.year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
