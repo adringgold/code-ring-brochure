@@ -1,0 +1,16 @@
+# Secrets and real data: this repo is public, so never commit these.
+/samples/
+*.xlsx
+.env
+.env.*
+*service-account*.json
+*serviceAccount*.json
+*-firebase-adminsdk-*.json
+*.pem
+*.key
+.secret.local
+.runtimeconfig.json
+credentials.json
+.credentials.json
+.claude/settings.local.json
+CLAUDE.local.md

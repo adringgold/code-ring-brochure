@@ -4,12 +4,20 @@ Static brochure site for CodeRing, LLC, hosted on GitHub Pages.
 
 ## Layout
 
-- `docs/`: the published site (GitHub Pages serves this folder)
+- `docs/`: the published site. GitHub Pages serves everything in this folder at www.code-ring.com, so put only site files here.
   - `index.html`: the single-page site
   - `assets/`: logo, favicon, and the capability statement PDF
-- `capability-statement/`: source for the capability statement PDF (not published)
+- `capability-statement/`: source for the capability statement PDF. It isn't part of the site, but this repo is public, so anyone can read it.
   - `capability-statement.html`: edit this to change the PDF
   - `build-pdf.sh`: regenerates `docs/assets/CodeRing_Capability_Statement.pdf` using headless Chrome
+
+## Setup
+
+After cloning, run this once. It checks each commit for secrets:
+
+```
+git config core.hooksPath .githooks
+```
 
 ## Updating
 

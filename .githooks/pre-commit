@@ -1,0 +1,3 @@
+#!/bin/sh
+# Installed by `npm install` (scripts/check-secrets.mjs --install). Bypassing with --no-verify is possible but don't.
+exec node scripts/check-secrets.mjs
